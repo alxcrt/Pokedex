@@ -57,3 +57,35 @@
 .ice {
   background-color: #98d8d8;
 }
+
+.steel {
+  background-color: #b8b8d8;
+}
+
+.ghost {
+  background-color: #7b62a3;
+}
+
+.HP {
+  background-color: #df2140;
+}
+
+.ATK {
+  background-color: #ff994f;
+}
+
+.DEF {
+  background-color: #ffdc4e;
+}
+
+.SpA {
+  background-color: #85ddff;
+}
+
+.SpD {
+  background-color: #a8f084;
+}
+
+.SPD {
+  background-color: #f992a4;
+}

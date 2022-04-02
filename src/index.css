@@ -1,12 +1,13 @@
 @import url("/src/shared/reset.css");
 @import url("/src/shared/colors.css");
-@import url("https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&family=Roboto&family=Space+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700&family=Roboto&family=Space+Mono:wght@400;700&display=swap");
 
 body {
   margin: 0;
   font-family: Chivo, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f6f8fc;
 }
 
 code {
@@ -16,4 +17,18 @@ code {
 
 a {
   text-decoration: none;
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+img {
+  animation: fadeIn 0.5s ease-in-out;
 }

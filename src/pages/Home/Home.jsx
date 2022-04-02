@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import PokeCard from "../../components/PokeCard";
 import "./Home.css";
 import usePokedex from "../../stores/usePokedex";
+import PokeLoading from "../../components/PokeLoading";
 const axios = require("axios");
 
 const pokemonsOnPage = 151;
@@ -40,11 +41,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <>
       {/* <h1>Home</h1> */}
 
       {loading ? (
-        <div>Loading...</div>
+        <PokeLoading />
       ) : (
         <div className="PokeDex">
           {pokedex.map((pokemon) => (
@@ -52,6 +53,6 @@ export default function Home() {
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 }

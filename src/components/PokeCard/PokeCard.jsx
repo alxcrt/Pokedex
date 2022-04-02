@@ -40,8 +40,6 @@ export default function PokeCard(props) {
               {type.type.name}
             </p>
           ))}
-          {/* <p className="PokeCard-type grass">Grass</p>
-          <p className="PokeCard-type poison">Poison</p> */}
         </div>
       </div>
     </Link>
