@@ -1,0 +1,59 @@
+.grass {
+  background-color: #78c850;
+}
+
+.poison {
+  background-color: #d478d4;
+}
+
+.fire {
+  background-color: #ff994d;
+}
+
+.flying {
+  background-color: #a890f0;
+}
+
+.water {
+  background-color: #95b5ff;
+}
+
+.bug {
+  background-color: #c2d7b0;
+}
+
+.normal {
+  background-color: #a8a878;
+}
+
+.electric {
+  background-color: #f8d030;
+}
+
+.ground {
+  background-color: #ffcd83;
+}
+
+.fairy {
+  background-color: #ffaec9;
+}
+
+.fighting {
+  background-color: #eb6a63;
+}
+
+.psychic {
+  background-color: #f85888;
+}
+
+.rock {
+  background-color: #b8a038;
+}
+
+.dragon {
+  background-color: #743bef;
+}
+
+.ice {
+  background-color: #98d8d8;
+}

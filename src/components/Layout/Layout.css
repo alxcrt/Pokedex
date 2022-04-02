@@ -1,0 +1,10 @@
+.app-wrapper {
+  display: flex;
+  justify-content: center;
+
+  min-height: 100vh;
+}
+
+.content-wrapper {
+  width: 1080px;
+}

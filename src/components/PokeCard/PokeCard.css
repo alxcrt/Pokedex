@@ -1,0 +1,57 @@
+.PokeCard {
+  width: 15rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+    0 15px 40px rgba(166, 173, 201, 0.2);
+  /* box-shadow: */
+  /* 0 7px 30px -10px rgba(150,170,180,0.5); */
+  position: relative;
+  margin-top: 2rem;
+}
+
+.PokeCard:hover {
+  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.1),
+    0 15px 40px rgba(166, 173, 201, 0.3);
+}
+
+.PokeCard-image {
+  position: absolute;
+}
+
+.PokeCard-number {
+  margin-top: 2.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: gray;
+}
+
+.PokeCard-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0.75rem 0 0.75rem 0;
+  text-transform: capitalize;
+}
+
+.PokeCard-types {
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.PokeCard-type {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #000;
+  text-transform: uppercase;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
