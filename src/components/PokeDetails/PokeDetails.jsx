@@ -1,6 +1,7 @@
 import React from "react";
 import "./PokeDetails.css";
 import { Link } from "react-router-dom";
+import Arrow from "../../assets/right-arrow.svg";
 
 const pokeStatType = {
   hp: "HP",
@@ -107,78 +108,119 @@ export default function PokeDetails({ pokemon }) {
           <p className="PokeDetails-title">evolutions</p>
           <p>{pokemon.species.flavor_text_entries[1].flavor_text}</p>
         </div> */}
-          <div>
-            <p className="PokeDetails-title">evolution</p>
-            <div className="PokeDetails-evolutions">
-              {pokemon.evolutionChain.map((evo, i) => (
-                <div className="PokeDetails-evolution" key={evo.species_name}>
-                  <Link to={`/pokemon/${evo.id}`} key={evo.id}>
-                    <div>
-                      <img src={evo.sprite} alt={evo.species_name} />
-                      <p>{evo.species_name}</p>
-                      <p>{evo.min_level}</p>
-                      <p>{evo.trigger_name}</p>
-                      <p>{evo.item ? evo.item.name : ""}</p>
-                    </div>
-                  </Link>
-                  {i !== pokemon.evolutionChain.length - 1 && (
-                    <div className="PokeDetails-evolution-trigger">
-                      {pokemon.evolutionChain[i + 1].trigger_name ===
-                        "level-up" && (
+        </div>
+
+        <div className="PokeDetails-footer">
+          <p className="PokeDetails-title">evolution</p>
+          <div className="PokeDetails-evolutions">
+            {pokemon.evolutionChain.map((evo, i) => (
+              <div className="PokeDetails-evolution" key={evo.species_name}>
+                <Link to={`/pokemon/${evo.id}`} key={evo.id}>
+                  <div>
+                    <img
+                      src={evo.sprite}
+                      alt={evo.species_name}
+                      className="PokeDetails-evolution-image"
+                    />
+                    {/* <p>{evo.species_name}</p>
+                    <p>{evo.min_level}</p>
+                    <p>{evo.trigger_name}</p>
+                    <p>{evo.item ? evo.item.name : ""}</p> */}
+                  </div>
+                </Link>
+                {i !== pokemon.evolutionChain.length - 1 && (
+                  <div className="PokeDetails-evolution-trigger">
+                    {pokemon.evolutionChain[i + 1].trigger_name ===
+                      "level-up" && (
+                      <p>
+                        {pokemon.evolutionChain[i + 1].min_level != null
+                          ? `Lvl ` + pokemon.evolutionChain[i + 1].min_level
+                          : "❤️Friendship❤️"}
+                      </p>
+                    )}
+                    {pokemon.evolutionChain[i + 1].trigger_name ===
+                      "use-item" && (
+                      <div className="PokeDetails-evolution-item">
                         <p>
-                          {pokemon.evolutionChain[i + 1].min_level != null
-                            ? `Lvl ` + pokemon.evolutionChain[i + 1].min_level
-                            : "Friendship"}
+                          {`${
+                            pokemon.evolutionChain[i + 1].item.name != null
+                              ? pokemon.evolutionChain[i + 1].item.name
+                              : "???"
+                          }`}
                         </p>
-                      )}
-                      {pokemon.evolutionChain[i + 1].trigger_name ===
-                        "use-item" && (
-                        <div>
-                          <p>
-                            {`Item ${
-                              pokemon.evolutionChain[i + 1].item.name != null
-                                ? pokemon.evolutionChain[i + 1].item.name
-                                : "???"
-                            }`}
-                          </p>
-                          <img
-                            src={`https://img.pokemondb.net/sprites/items/${
-                              pokemon.evolutionChain[i + 1].item.name
-                            }.png`}
-                            alt=""
-                          />
-                        </div>
-                      )}
+                        <img
+                          src={`https://img.pokemondb.net/sprites/items/${
+                            pokemon.evolutionChain[i + 1].item.name
+                          }.png`}
+                          alt=""
+                        />
+                      </div>
+                    )}
 
-                      {pokemon.evolutionChain[i + 1].trigger_name ===
-                        "trade" && <p>Trade</p>}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                    {pokemon.evolutionChain[i + 1].trigger_name === "trade" && (
+                      <p>Trade</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-
-          <div className="PokeDetails-section">
+          <div className="PokeDetails-navigation">
             {/* Prev and next pokemon */}
 
             {pokemon.prevPokemon && (
               <Link to={`/pokemon/${pokemon.id - 1}`}>
-                <img
-                  src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon.prevPokemon.name}.gif`}
-                  alt={pokemon.prevPokemon.name}
-                />
+                <div className="PokeDetails-navigation-prev">
+                  {/* Arrow left png */}
+                  <img
+                    src={Arrow}
+                    alt="prev-pokemon"
+                    className="PokeDetails-navigation-arrow right-arrow"
+                  />
+                  <img
+                    src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon.prevPokemon.name}.gif`}
+                    alt={pokemon.prevPokemon.name}
+                  />
+                  <p className="PokeDetails-navigation-pokemon-name">
+                    {pokemon.prevPokemon.name}
+                  </p>
+                  <p>#{pokemon.prevPokemon.id.toString().padStart(3, "0")}</p>
+                </div>
               </Link>
             )}
 
+            <p className="vertical-line" />
+
             {pokemon.nextPokemon && (
               <Link to={`/pokemon/${pokemon.id + 1}`}>
-                <img
-                  src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon.nextPokemon.name}.gif`}
-                  alt={pokemon.nextPokemon.name}
-                />
+                <div className="PokeDetails-navigation-next">
+                  <p className="PokeDetails-navigation-pokemon-name">
+                    {pokemon.nextPokemon.name}
+                  </p>
+                  <p>#{pokemon.nextPokemon.id.toString().padStart(3, "0")}</p>
+                  <img
+                    src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon.nextPokemon.name}.gif`}
+                    alt={pokemon.nextPokemon.name}
+                  />
+                  <img
+                    src={Arrow}
+                    alt="next-pokemon"
+                    className="PokeDetails-navigation-arrow left-arrow"
+                  />
+                </div>
               </Link>
             )}
+            {/* 
+            <div className="PokeDetails-navigation-next">
+              {pokemon.nextPokemon && (
+                <Link to={`/pokemon/${pokemon.id + 1}`}>
+                  <img
+                    src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon.nextPokemon.name}.gif`}
+                    alt={pokemon.nextPokemon.name}
+                  />
+                </Link>
+              )}
+            </div> */}
           </div>
         </div>
       </div>
