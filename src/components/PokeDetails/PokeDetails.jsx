@@ -101,6 +101,15 @@ export default function PokeDetails({ pokemon }) {
                   <p>{stat.base_stat}</p>
                 </div>
               ))}
+              <div className="PokeDetails-stat TOT-BG">
+                <p className={"PokeDetails-stat-type TOT"}>TOT</p>
+
+                <p>
+                  {pokemon.stats.reduce((acc, stat) => {
+                    return acc + stat.base_stat;
+                  }, 0)}
+                </p>
+              </div>
             </div>
           </div>
 

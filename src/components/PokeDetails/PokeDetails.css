@@ -30,12 +30,15 @@
   /* margin-top: 2rem; */
 }
 
-/* .PokeDetails-body {
-  width: 25rem;
-} */
+.PokeDetails-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .PokeDetails-image {
-  width: 15rem;
+  width: 20rem;
   /* width: 25%; */
   /* -moz-transform: scale(0.5);
   -webkit-transform: scale(0.5);
@@ -94,7 +97,7 @@
 }
 
 .PokeDetails-section {
-  margin: 1rem 0;
+  /* margin: 1rem 0; */
 }
 
 .PokeDetails-description {
@@ -144,24 +147,31 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .PokeDetails-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-weight: 600;
   /* border: 1px solid black; */
   background-color: #f6f8fc;
-  padding: 0.5rem;
+  padding: 0.5rem 0.25rem;
   border-radius: 2rem;
 
   text-transform: capitalize;
   font-size: 0.9rem;
 }
 
+.PokeDetails-stat p {
+  margin: 0.25rem 0;
+}
+
 .PokeDetails-stat-type {
-  padding: 0.25rem;
+  padding: 0.3rem;
   border-radius: 2rem;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   color: white;
 }
 
@@ -200,11 +210,11 @@
 }
 
 .PokeDetails-evolution-image {
-  width: 6rem;
+  width: 7rem;
 }
 
 .PokeDetails-footer {
-  margin-top: 1rem;
+  margin-top: 2rem;
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
