@@ -169,18 +169,33 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  /* gap: 0.5rem; */
 }
 
 .PokeDetails-evolution {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   font-weight: 600;
   /* border: 1px solid black; */
-  background-color: #f6f8fc;
-  padding: 0.5rem;
-  border-radius: 2rem;
+  /* background-color: #f6f8fc; */
+  /* padding: 0.5rem;
+  border-radius: 2rem; */
 
   text-transform: capitalize;
   font-size: 0.9rem;
+}
+
+.PokeDetails-evolution-trigger {
+  /* padding: 0.25rem;
+  border-radius: 2rem;
+  margin-bottom: 0.5rem; */
+  color: #a9adae;
+  background-color: #f6f8fc;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  margin: 0 0.5rem;
 }
 
 .PokeDetails-evolution img {
