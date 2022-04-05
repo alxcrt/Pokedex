@@ -30,7 +30,12 @@
   /* margin-top: 2rem; */
 }
 
+.PokeDetails-header {
+  padding: 1rem;
+}
+
 .PokeDetails-body {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;

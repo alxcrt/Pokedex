@@ -3,6 +3,8 @@ import PokeCard from "../../components/PokeCard";
 import "./Home.css";
 import usePokedex from "../../stores/usePokedex";
 import PokeLoading from "../../components/PokeLoading";
+import PokeSearchBar from "../../components/PokeSearchBar";
+import useWindowSize from "../../hooks/useWindowSize";
 const axios = require("axios");
 
 const pokemonsOnPage = 151;
@@ -10,6 +12,9 @@ const pokemonsOnPage = 151;
 export default function Home() {
   const { pokedex, setPokedex } = usePokedex();
   const [loading, setLoading] = useState(false);
+
+  const { width } = useWindowSize();
+  console.log(width);
 
   const fetchPokemonData = useCallback(async () => {
     const promiseArr = [];
@@ -41,18 +46,21 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className="Home">
       {/* <h1>Home</h1> */}
 
       {loading ? (
         <PokeLoading />
       ) : (
-        <div className="PokeDex">
-          {pokedex.map((pokemon) => (
-            <PokeCard key={pokemon.id} pokemon={pokemon} />
-          ))}
-        </div>
+        <>
+          <PokeSearchBar />
+          <div className="PokeDex">
+            {pokedex.map((pokemon) => (
+              <PokeCard key={pokemon.id} pokemon={pokemon} />
+            ))}
+          </div>
+        </>
       )}
-    </>
+    </div>
   );
 }
