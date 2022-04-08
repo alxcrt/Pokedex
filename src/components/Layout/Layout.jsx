@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import "./Layout.css";
+import './Layout.css';
 
 export default function Layout({ children }) {
   return (

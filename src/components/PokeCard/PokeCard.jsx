@@ -1,10 +1,20 @@
-import React, { useState } from "react";
-import "./PokeCard.css";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import './PokeCard.css';
+import { Link } from 'react-router-dom';
 
 Number.prototype.map = function (in_min, in_max, out_min, out_max) {
   return ((this - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
 };
+
+const pokemonGifUrl = (name, id) => {
+  if (id <= 649) {
+    return `https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`;
+  }
+};
+
+const pokemonSpriteUrl = (name) =>
+  `https://img.pokemondb.net/sprites/bank/normal/${name}.png`;
+// `https://img.pokemondb.net/sprites/black-white/normal/${name}.png`;
 
 export default function PokeCard(props) {
   const { name, types, id } = props.pokemon;
@@ -22,8 +32,9 @@ export default function PokeCard(props) {
         <img
           onLoad={onImgLoad}
           className="PokeCard-image"
-          src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`}
-          alt="bulbasaur"
+          // src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`}
+          src={pokemonGifUrl(name, id) || pokemonSpriteUrl(name, id)}
+          alt={name}
           style={{ top: `-${topOffset}px` }}
         />
         {/* Display the number */}
@@ -33,12 +44,14 @@ export default function PokeCard(props) {
         {/* Display the type */}
         <div className="PokeCard-types">
           {types.map((type) => (
-            <p
-              className={`PokeCard-type ${type.type.name}`}
-              key={type.type.name}
-            >
-              {type.type.name}
-            </p>
+            <Link to={`/?type=${type.type.name}`} key={type.type.name}>
+              <p
+                className={`PokeCard-type ${type.type.name}`}
+                key={type.type.name}
+              >
+                {type.type.name}
+              </p>
+            </Link>
           ))}
         </div>
       </div>

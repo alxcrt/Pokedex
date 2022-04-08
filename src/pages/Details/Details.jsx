@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import PokeDetails from "../../components/PokeDetails";
-import PokeLoading from "../../components/PokeLoading";
-const axios = require("axios");
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import PokeDetails from '../../components/PokeDetails';
+import PokeLoading from '../../components/PokeLoading';
+
+const axios = require('axios');
 
 export default function Details() {
   const { id } = useParams();
@@ -14,7 +15,7 @@ export default function Details() {
     let evoChain = [];
 
     do {
-      let evoDetails = evoData["evolution_details"][0];
+      let evoDetails = evoData['evolution_details'][0];
       let pokemonData = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${evoData.species.name}`
       );
@@ -25,12 +26,12 @@ export default function Details() {
         trigger_name: !evoDetails ? null : evoDetails.trigger.name,
         item: !evoDetails ? null : evoDetails.item,
         sprite:
-          pokemonData.data.sprites.other["official-artwork"].front_default,
+          pokemonData.data.sprites.other['official-artwork'].front_default,
         id: pokemonData.data.id,
       });
 
-      evoData = evoData["evolves_to"][0];
-    } while (!!evoData && evoData.hasOwnProperty("evolves_to"));
+      evoData = evoData['evolves_to'][0];
+    } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
     return evoChain;
   };
 
@@ -61,11 +62,34 @@ export default function Details() {
         })
         .catch(() => {});
 
+      resp = await axios.get(
+        `https://raw.githubusercontent.com/cheeaun/repokemon/master/data/pokemon-list.json`
+      );
+      const poke = resp.data.find(
+        (p) => p.collectibles_slug === pokemonData.name
+      );
+      pokemonData.weakness = poke.weakness;
+
+      if (pokemonData.id === 649) {
+        pokemonData.nextPokemon = null;
+      }
+
       setPokemon(pokemonData);
       setIsLoadind(false);
     };
     fetchData();
   }, [id]);
 
-  return <>{isLoading ? <PokeLoading /> : <PokeDetails pokemon={pokemon} />}</>;
+  return (
+    <>
+      {isLoading ? (
+        <PokeLoading />
+      ) : (
+        <>
+          {/* <PokeNavBar /> */}
+          <PokeDetails pokemon={pokemon} />
+        </>
+      )}
+    </>
+  );
 }
