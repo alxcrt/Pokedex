@@ -12,10 +12,10 @@ export default function PokeSearchBar({ onSearch }) {
     onSearch(event.target.value);
   };
 
-  const onResetClick = () => {
-    setSearchTerm('');
-    navigator('/');
-  };
+  // const onResetClick = () => {
+  //   setSearchTerm('');
+  //   navigator('/');
+  // };
 
   return (
     <div className="PokeSearchBar">
@@ -27,13 +27,13 @@ export default function PokeSearchBar({ onSearch }) {
         onChange={handleChange}
       />
 
-      <img
+      {/* <img
         className="reset"
         // src="https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/fire.svg"
         src={PokeReset}
         alt=""
         onClick={() => onResetClick()}
-      />
+      /> */}
     </div>
   );
 }
