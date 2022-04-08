@@ -5,6 +5,9 @@ import usePokedex from '../../stores/usePokedex';
 import PokeLoading from '../../components/PokeLoading';
 import PokeSearchBar from '../../components/PokeSearchBar';
 import { useLocation } from 'react-router-dom';
+import Close from '../../assets/close.png';
+import { useNavigate } from 'react-router-dom';
+
 // import PokeNavBar from '../../components/PokeNavBar';
 
 const axios = require('axios');
@@ -19,6 +22,7 @@ export default function Home() {
   const [pokemonNames, setPokemonNames] = useState([]);
   const search = useLocation().search;
   const params = useMemo(() => new URLSearchParams(search), [search]);
+  const navigate = useNavigate();
   // Get query params
 
   const fecthPokemonNames = useCallback(async () => {
@@ -204,6 +208,26 @@ export default function Home() {
         <div className="Home">
           {/* <PokeNavBar /> */}
           <PokeSearchBar onSearch={handleSearch} />
+
+          {params.get('type') && (
+            <p
+              style={{ justifySelf: 'left' }}
+              className={`Home-type ${params.get('type')}`}
+              // key={type.type.name}
+            >
+              {params.get('type')}
+              <img
+                className="close-icon"
+                // src="https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/fire.svg"
+                src={Close}
+                alt="reset"
+                onClick={() => {
+                  navigate('/');
+                }}
+              />
+            </p>
+          )}
+
           <div className="PokeDex">
             {filteredPokedex.map((pokemon) => (
               <PokeCard key={pokemon.id} pokemon={pokemon} />
