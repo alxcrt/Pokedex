@@ -43,7 +43,7 @@
 }
 
 .PokeCard-types {
-  gap: 0.5rem;
+  gap: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -53,8 +53,13 @@
 .PokeCard-type {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #000;
+  color: #fff;
   text-transform: uppercase;
   border-radius: 0.5rem;
   padding: 0.5rem;
+}
+
+.PokeCard-type:hover {
+  filter: saturate(200%);
+  transform: scale(1.1);
 }

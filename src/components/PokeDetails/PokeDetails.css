@@ -2,11 +2,13 @@
   width: 100%;
   height: 100%;
   display: flex;
+
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .PokeDetails {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   /* flex-direction: row; */
@@ -30,7 +32,12 @@
   /* margin-top: 2rem; */
 }
 
+.PokeDetails-header {
+  padding: 1rem;
+}
+
 .PokeDetails-body {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -69,7 +76,7 @@
 
 .PokeDetails-types {
   /* margin-top: 0.5rem; */
-  gap: 0.5rem;
+  gap: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -77,18 +84,26 @@
   align-items: center;
 }
 
+.PokeDetails-type:hover {
+  filter: saturate(200%);
+  transform: scale(1.1);
+}
+
 .PokeDetails-type {
-  font-size: 0.9rem;
+  /* font-size: 0.9rem; */
   font-weight: 700;
-  color: #000;
+  color: #fff;
   text-transform: uppercase;
   border-radius: 0.5rem;
   padding: 0.5rem;
 }
 
 .PokeDetails-title {
-  margin-bottom: 1rem;
-  font-size: 1rem;
+  /* font-style: oblique; */
+  /* text-decoration: underline !important; */
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #000;
   /* margin: 0.75rem 0 0.75rem 0; */
@@ -140,6 +155,32 @@
   padding: 0.5rem 1.5rem;
   border-radius: 1rem;
   text-transform: capitalize;
+}
+
+.icon {
+  border-radius: 100%;
+  width: 2rem;
+  padding: 0.5rem;
+  /* margin: auto; */
+  transition: 200ms all;
+}
+
+.icon:hover {
+  filter: saturate(200%);
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.PokeDetails-weaknesses {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.PokeDetails-weaknes {
+  /* width: 3rem; */
 }
 
 .PokeDetails-stats {
@@ -214,7 +255,7 @@
 }
 
 .PokeDetails-footer {
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
@@ -293,6 +334,32 @@
   gap: 0.5rem;
 }
 
+.close {
+  /* display: flex; */
+  position: absolute;
+  /* left: 50%; */
+  top: 1.25rem;
+  right: 1.25rem;
+  background: #ff5350;
+  box-shadow: 0 0 20px #ff5350;
+  /* height: 60%;
+  width: 60%;
+  margin: 20%; */
+  border-radius: 25%;
+  width: 1.5rem;
+  padding: 0.5rem;
+  /* height: 100px; */
+  /* width: 100px; */
+  /* margin: auto; */
+  transition: 200ms all;
+}
+
+.close:hover {
+  filter: saturate(200%);
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
 @media (max-width: 819px) {
   .PokeDetails {
     display: flex;
@@ -315,5 +382,14 @@
 
   .PokeDetails-evolution {
     flex-direction: column;
+  }
+
+  .PokeDetails-navigation-prev p,
+  .PokeDetails-navigation-next p {
+    display: none;
+  }
+
+  .PokeDetails-stats {
+    gap: 0.5rem;
   }
 }
