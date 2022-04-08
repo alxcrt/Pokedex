@@ -66,8 +66,9 @@ export default function Details() {
         `https://raw.githubusercontent.com/cheeaun/repokemon/master/data/pokemon-list.json`
       );
       const poke = resp.data.find(
-        (p) => p.collectibles_slug === pokemonData.name
+        (p) => p.number === pokemonData.id.toString().padStart(3, '0')
       );
+      console.log(resp.data);
       pokemonData.weakness = poke.weakness;
 
       if (pokemonData.id === 649) {
