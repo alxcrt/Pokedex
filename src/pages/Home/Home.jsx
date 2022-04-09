@@ -4,9 +4,10 @@ import './Home.css';
 import usePokedex from '../../stores/usePokedex';
 import PokeLoading from '../../components/PokeLoading';
 import PokeSearchBar from '../../components/PokeSearchBar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import Close from '../../assets/close.png';
 import { useNavigate } from 'react-router-dom';
+import Pokedex from '../../assets/Pokedex.png';
 
 // import PokeNavBar from '../../components/PokeNavBar';
 
@@ -32,21 +33,6 @@ export default function Home() {
     const pokeNames = resp.data.results.map((pokemon) => pokemon.name);
     setPokemonNames(pokeNames);
   }, []);
-
-  // const filterPokedex = useCallback(
-  //   (pokedex) => {
-  //     const filteredPokedex = pokedex.filter((pokemon) => {
-  //       // const { name, id } = pokemon;
-  //       if (params.get('type')) {
-  //         const type = params.get('type');
-  //         return pokemon.types.some((t) => t.type.name === type);
-  //       }
-  //       return true;
-  //     });
-  //     setFilteredPokedex(filteredPokedex);
-  //   },
-  //   [params]
-  // );
 
   const fetchFilteredPokemonData = useCallback(async () => {
     const promiseArr = [];
@@ -177,35 +163,16 @@ export default function Home() {
     }
   };
 
-  // const loadMorePokemons = () => {
-  //   const fetchData = async () => {
-  //     const resp = await fetchPokemonData();
-  //     setPokedex([...pokedex, ...resp]);
-  //     setFilteredPokedex([...filteredPokedex, ...resp]);
-  //   };
-  //   fetchData();
-  // };
-
-  // const filterByType = (type) => {
-  //   const filteredPokes = pokedex.filter((pokemon) => {
-  //     for (const pokemonType of pokemon.types) {
-  //       if (pokemonType.type.name === type) {
-  //         return true;
-  //       }
-  //     }
-  //     return false;
-  //   });
-  //   setFilteredPokedex(filteredPokes);
-  // };
-
   return (
     <>
-      {/* <h1>Home</h1> */}
-
       {loading ? (
         <PokeLoading />
       ) : (
         <div className="Home">
+          <Link to="/">
+            <img src={Pokedex} alt="Pokedex" className="Pokedex-Logo" />
+          </Link>
+
           {/* <PokeNavBar /> */}
           <PokeSearchBar onSearch={handleSearch} />
 

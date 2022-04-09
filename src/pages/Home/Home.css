@@ -26,20 +26,20 @@
 }
 
 .Home-type {
-  /* gap: 2rem; */
-  /* margin-right: 75%; */
-  /* margin-top: 2rem; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  /* gap: 2rem; */
-  /* gap: 2rem; */
-  /* margin: 1rem 0; */
   font-size: 0.9rem;
   font-weight: 700;
   color: #fff;
   text-transform: uppercase;
   border-radius: 0.5rem;
   padding: 0.5rem;
+}
+
+.Pokedex-Logo:hover {
+  /* filter: saturate(200%); */
+  transform: scale(1.01);
+  cursor: pointer;
 }

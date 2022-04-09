@@ -59,7 +59,7 @@ export default function PokeDetails({ pokemon }) {
               {/* Remove \f */}
               {pokemon.species.flavor_text_entries[
                 pokemon.id <= 649 ? 1 : 6
-              ].flavor_text.replace(/\f/g, '')}
+              ].flavor_text.replace(/\f/g, ' ')}
             </p>
           </div>
           <div className="PokeDetails-section">
