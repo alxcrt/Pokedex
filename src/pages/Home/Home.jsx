@@ -11,7 +11,7 @@ import Pokedex from '../../assets/Pokedex.png';
 
 const axios = require('axios');
 
-const pokemonsOnPage = 18;
+const pokemonsOnPage = 24;
 const MAX_POKEMON_ID = 898;
 
 export default function Home() {
@@ -131,7 +131,6 @@ export default function Home() {
       window.innerHeight + document.documentElement.scrollTop ===
       document.documentElement.offsetHeight
     ) {
-      console.log('bottom of the page');
       const fetchData = async () => {
         const resp = await fetchPokemonData();
         setPokedex([...pokedex, ...resp]);

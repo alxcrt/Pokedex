@@ -103,7 +103,7 @@ export default function Details() {
       );
       pokemonData.weakness = poke.weakness;
 
-      if (pokemonData.id === 649) {
+      if (pokemonData.id === 898) {
         pokemonData.nextPokemon = null;
       }
 
