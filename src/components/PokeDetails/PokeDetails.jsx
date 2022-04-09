@@ -20,7 +20,7 @@ const pokemonGifUrl = (name, id) => {
 };
 
 const pokemonSpriteUrl = (name) =>
-  `https://img.pokemondb.net/sprites/bank/normal/${name}.png`;
+  `https://img.pokemondb.net/sprites/home/normal/${name}.png`;
 
 export default function PokeDetails({ pokemon }) {
   return (
