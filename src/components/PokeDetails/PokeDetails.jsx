@@ -139,68 +139,69 @@ export default function PokeDetails({ pokemon }) {
               </div>
             </div>
           </div>
-
-          {/* <div className="PokeDetails-section">
-          <p className="PokeDetails-title">evolutions</p>
-          <p>{pokemon.species.flavor_text_entries[1].flavor_text}</p>
-        </div> */}
         </div>
 
         <div className="PokeDetails-footer">
           <p className="PokeDetails-title">evolution</p>
-          <div className="PokeDetails-evolutions">
-            {pokemon.evolutionChain.map((evo, i) => (
-              <div className="PokeDetails-evolution" key={evo.species_name}>
-                <Link to={`/pokemon/${evo.id}`} key={evo.id}>
-                  <div>
-                    <img
-                      src={evo.sprite}
-                      alt={evo.species_name}
-                      className="PokeDetails-evolution-image"
-                    />
-                    {/* <p>{evo.species_name}</p>
+          {pokemon.evolutionChain.map((evos) => (
+            <div className="PokeDetails-evolutions" key={JSON.stringify(evos)}>
+              {evos.map((evo, i) => (
+                <div
+                  className="PokeDetails-evolution"
+                  key={JSON.stringify(evo)}
+                >
+                  <Link to={`/pokemon/${evo.id}`}>
+                    <div>
+                      <img
+                        src={
+                          evo.sprites.other['official-artwork'].front_default
+                        }
+                        alt={evo.species_name}
+                        className="PokeDetails-evolution-image"
+                      />
+                      {/* <p>{evo.species_name}</p>
                     <p>{evo.min_level}</p>
                     <p>{evo.trigger_name}</p>
                     <p>{evo.item ? evo.item.name : ""}</p> */}
-                  </div>
-                </Link>
-                {i !== pokemon.evolutionChain.length - 1 && (
-                  <div className="PokeDetails-evolution-trigger">
-                    {pokemon.evolutionChain[i + 1].trigger_name ===
-                      'level-up' && (
-                      <p>
-                        {pokemon.evolutionChain[i + 1].min_level != null
-                          ? `Lvl ` + pokemon.evolutionChain[i + 1].min_level
-                          : '❤️Friendship❤️'}
-                      </p>
-                    )}
-                    {pokemon.evolutionChain[i + 1].trigger_name ===
-                      'use-item' && (
-                      <div className="PokeDetails-evolution-item">
+                    </div>
+                  </Link>
+                  {i !== evos.length - 1 && (
+                    <div className="PokeDetails-evolution-trigger">
+                      {evos[i + 1].evolution_details.trigger.name ===
+                        'level-up' && (
                         <p>
-                          {`${
-                            pokemon.evolutionChain[i + 1].item.name != null
-                              ? pokemon.evolutionChain[i + 1].item.name
-                              : '???'
-                          }`}
+                          {evos[i + 1].evolution_details.min_level !== null
+                            ? `Lvl ` + evos[i + 1].evolution_details.min_level
+                            : '???'}
                         </p>
-                        <img
-                          src={`https://img.pokemondb.net/sprites/items/${
-                            pokemon.evolutionChain[i + 1].item.name
-                          }.png`}
-                          alt=""
-                        />
-                      </div>
-                    )}
+                      )}
+                      {evos[i + 1].evolution_details.trigger.name ===
+                        'use-item' && (
+                        <div className="PokeDetails-evolution-item">
+                          <p>
+                            {`${
+                              evos[i + 1].evolution_details.item.name !== null
+                                ? evos[i + 1].evolution_details.item.name
+                                : '???'
+                            }`}
+                          </p>
+                          <img
+                            src={`https://img.pokemondb.net/sprites/items/${
+                              evos[i + 1].evolution_details.item.name
+                            }.png`}
+                            alt=""
+                          />
+                        </div>
+                      )}
 
-                    {pokemon.evolutionChain[i + 1].trigger_name === 'trade' && (
-                      <p>Trade</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+                      {evos[i + 1].evolution_details.trigger.name ===
+                        'trade' && <p>Trade</p>}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
           <div className="PokeDetails-navigation">
             {/* Prev and next pokemon */}
 

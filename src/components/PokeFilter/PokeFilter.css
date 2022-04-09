@@ -1,0 +1,87 @@
+.PokeFilter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 100%; */
+  margin-top: 2rem;
+  /* gap: 1rem; */
+}
+
+.PokeFilter-sort select {
+  /* Clean and modern look */
+  /* Remove the border */
+  border: none;
+  /* Remove the background */
+  background: none;
+
+  /* Remove the caret */
+  appearance: none;
+  /* Remove the outline */
+  outline: none;
+  /* Add some font weight */
+  font-weight: 600;
+  /* Add some color */
+  color: #1a2b42;
+  /* Add some font size */
+  font-size: 1rem;
+  /* Add some margin */
+  margin-right: 1rem;
+  /* Background color of selction */
+  background-color: #f6f8fc;
+  outline: none;
+  /* Add a carrot icon */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0em center;
+}
+
+.PokeFilter-range {
+  display: flex;
+  justify-items: center;
+  gap: 0.5rem;
+  /* justify-content: space-between; */
+  align-items: center;
+  /* margin-bottom: 10px; */
+  /* Remove input number arrows */
+}
+
+.PokeFilter-range {
+  color: #2a384e;
+  font-weight: 600;
+}
+
+.PokeFilter-range input {
+  /* Clean modern look */
+  /* Remove the border */
+  border: none;
+  /* Remove the background */
+  background: none;
+  /* Remove the caret */
+  appearance: none;
+  /* Remove the outline */
+  outline: none;
+
+  width: 3rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 2px solid #1a2b42;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+@media screen and (max-width: 589px) {
+  .PokeFilter {
+    flex-direction: column;
+  }
+}
