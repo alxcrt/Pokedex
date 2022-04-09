@@ -9,12 +9,10 @@ import Close from '../../assets/close.png';
 import { useNavigate } from 'react-router-dom';
 import Pokedex from '../../assets/Pokedex.png';
 
-// import PokeNavBar from '../../components/PokeNavBar';
-
 const axios = require('axios');
 
-const pokemonsOnPage = 25;
-const MAX_POKEMON_ID = 649;
+const pokemonsOnPage = 18;
+const MAX_POKEMON_ID = 898;
 
 export default function Home() {
   const { pokedex, setPokedex } = usePokedex();
@@ -40,9 +38,7 @@ export default function Home() {
       `https://pokeapi.co/api/v2/type/${params.get('type')}`
     );
     const pokemonData = resp.data.pokemon.map((p) => p.pokemon);
-    // console.log(pokemonData);
     const pokemonIds = pokemonData.map((p) => p.url.split('/')[6]);
-    // console.log(pokemonIds);
     for (let i = 0; i < pokemonIds.length; i++) {
       if (pokemonIds[i] <= MAX_POKEMON_ID) {
         promiseArr.push(
@@ -69,29 +65,20 @@ export default function Home() {
 
   useEffect(() => {
     fecthPokemonNames();
-    // console.log(pokemonNames);
   }, [fecthPokemonNames]);
 
   useEffect(() => {
-    // console.log(params.get('type'));
     pokedex.length = 0;
     setLoading(true);
-    // console.log(pokedex);
     if (!params.get('type')) {
-      // console.log('fetching data');
-      // setLoading(true);
       const fetchData = async () => {
         const resp = await fetchPokemonData();
-        // console.log(resp);
         setPokedex(resp);
         setFilteredPokedex(resp);
-        // setFilteredPokemon(resp);
-        // setLoading(false);
         setLoading(false);
       };
       fetchData();
     } else if (params.get('type')) {
-      // console.log('fetching filtered data');
       const fetchData = async () => {
         const resp = await fetchFilteredPokemonData();
         setPokedex(resp);
@@ -103,11 +90,10 @@ export default function Home() {
       setFilteredPokedex(pokedex);
       setLoading(false);
     }
-
-    // filterPokedex(pokedex);
   }, [params, fetchFilteredPokemonData]);
 
   const handleSearch = async (searchTerm) => {
+    console.log(searchTerm);
     if (searchTerm !== '' && !params.get('type')) {
       const filteredPokemonNames = pokemonNames.filter((pokemon) =>
         pokemon.toLowerCase().startsWith(searchTerm.toLowerCase())
@@ -121,17 +107,9 @@ export default function Home() {
 
       setFilteredPokedex(filteredPokemon.map((p) => p.data));
     } else {
-      // Search by name,id, type
       const filteredPokes = pokedex.filter((pokemon) => {
-        // for (const type of pokemon.types) {
-        if (
-          pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-          // type.type.name.toLowerCase() === pokemonType
-          // pokemon.id.toString().includes(searchTerm) ||
-          // type.type.name.toLowerCase().includes(searchTerm.toLowerCase())
-        ) {
+        if (pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())) {
           return true;
-          // }
         }
         return false;
       });
@@ -153,7 +131,7 @@ export default function Home() {
       window.innerHeight + document.documentElement.scrollTop ===
       document.documentElement.offsetHeight
     ) {
-      // console.log('bottom of the page');
+      console.log('bottom of the page');
       const fetchData = async () => {
         const resp = await fetchPokemonData();
         setPokedex([...pokedex, ...resp]);
@@ -173,7 +151,6 @@ export default function Home() {
             <img src={Pokedex} alt="Pokedex" className="Pokedex-Logo" />
           </Link>
 
-          {/* <PokeNavBar /> */}
           <PokeSearchBar onSearch={handleSearch} />
 
           {params.get('type') && (

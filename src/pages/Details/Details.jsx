@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PokeDetails from '../../components/PokeDetails';
 import PokeLoading from '../../components/PokeLoading';
 
@@ -10,29 +10,63 @@ export default function Details() {
   const [pokemon, setPokemon] = useState(null);
   const [isLoading, setIsLoadind] = useState(true);
 
-  const fetchEvolutionChain = async (data) => {
-    let evoData = data.chain;
-    let evoChain = [];
+  const getPokemon = async (id) => {
+    const data = await axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+      .then((res) => res.data);
 
-    do {
-      let evoDetails = evoData['evolution_details'][0];
-      let pokemonData = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${evoData.species.name}`
-      );
+    return data;
+  };
 
-      evoChain.push({
-        species_name: evoData.species.name,
-        min_level: !evoDetails ? 1 : evoDetails.min_level,
-        trigger_name: !evoDetails ? null : evoDetails.trigger.name,
-        item: !evoDetails ? null : evoDetails.item,
-        sprite:
-          pokemonData.data.sprites.other['official-artwork'].front_default,
-        id: pokemonData.data.id,
+  const fetchEvolutionChain = async (chain) => {
+    let initial = getPokemon(chain?.species?.name);
+
+    const evolutions = [];
+
+    const evos = [initial];
+
+    chain.evolves_to.map((evolution) => {
+      let firstEvolution = getPokemon(evolution.species.name).then((res) => {
+        res.evolution_details = evolution.evolution_details[0];
+        return res;
       });
+      evos.push(firstEvolution);
 
-      evoData = evoData['evolves_to'][0];
-    } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
-    return evoChain;
+      if (evolution.evolves_to?.length) {
+        for (const secondEvolution of evolution.evolves_to) {
+          let second = getPokemon(secondEvolution.species.name).then((res) => {
+            res.evolution_details = secondEvolution.evolution_details[0];
+            return res;
+          });
+          evos.push(second);
+        }
+      }
+    });
+
+    const resolved = await Promise.all(evos);
+
+    chain.evolves_to.map((evolution) => {
+      const initialEvolution = resolved.find(
+        (pokemon) => pokemon.name === chain?.species?.name
+      );
+      const firstEvolution = resolved.find(
+        (pokemon) => pokemon.name === evolution.species.name
+      );
+      const evolutionLine = [initialEvolution, firstEvolution];
+
+      if (evolution.evolves_to.length) {
+        for (const secondEvolution of evolution.evolves_to) {
+          const second = resolved.find(
+            (pokemon) => pokemon.name === secondEvolution.species.name
+          );
+          evolutions.push([...evolutionLine, second]);
+        }
+      } else {
+        evolutions.push(evolutionLine);
+      }
+    });
+
+    return evolutions;
   };
 
   useEffect(() => {
@@ -44,8 +78,7 @@ export default function Details() {
       resp = await axios.get(pokemonData.species.url);
       pokemonData.species = resp.data;
       resp = await axios.get(pokemonData.species.evolution_chain.url);
-      // pokemonData.evolutionChain = ;
-      pokemonData.evolutionChain = await fetchEvolutionChain(resp.data);
+      pokemonData.evolutionChain = await fetchEvolutionChain(resp.data.chain);
 
       // Store the previous pokemon in the pokedex
       await axios
@@ -68,7 +101,6 @@ export default function Details() {
       const poke = resp.data.find(
         (p) => p.number === pokemonData.id.toString().padStart(3, '0')
       );
-      console.log(resp.data);
       pokemonData.weakness = poke.weakness;
 
       if (pokemonData.id === 649) {
@@ -87,7 +119,6 @@ export default function Details() {
         <PokeLoading />
       ) : (
         <>
-          {/* <PokeNavBar /> */}
           <PokeDetails pokemon={pokemon} />
         </>
       )}
