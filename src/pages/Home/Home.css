@@ -43,3 +43,9 @@
   transform: scale(1.01);
   cursor: pointer;
 }
+
+@media screen and (max-width: 589px) {
+  .Pokedex-Logo {
+    width: 20rem;
+  }
+}
