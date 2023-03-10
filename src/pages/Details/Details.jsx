@@ -99,7 +99,7 @@ export default function Details() {
         `https://raw.githubusercontent.com/cheeaun/repokemon/master/data/pokemon-list.json`
       );
       const poke = resp.data.find(
-        (p) => p.number === pokemonData.id.toString().padStart(3, '0')
+        (p) => p.number === pokemonData.id.toString().padStart(4, '0')
       );
       pokemonData.weakness = poke.weakness;
 
