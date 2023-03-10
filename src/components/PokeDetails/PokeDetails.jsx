@@ -190,6 +190,9 @@ export default function PokeDetails({ pokemon }) {
                               evos[i + 1].evolution_details.item.name
                             }.png`}
                             alt=""
+                            style={{
+                              imageRendering: 'pixelated',
+                            }}
                           />
                         </div>
                       )}
@@ -223,6 +226,9 @@ export default function PokeDetails({ pokemon }) {
                     }
                     // src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon.prevPokemon.name}.gif`}
                     alt={pokemon.prevPokemon.name}
+                    style={{
+                      imageRendering: 'pixelated',
+                    }}
                   />
                   <p className="PokeDetails-navigation-pokemon-name">
                     {pokemon.prevPokemon.name}
@@ -256,6 +262,9 @@ export default function PokeDetails({ pokemon }) {
                     }
                     // src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon.nextPokemon.name}.gif`}
                     alt={pokemon.nextPokemon.name}
+                    style={{
+                      imageRendering: 'pixelated',
+                    }}
                   />
                   <img
                     src={Arrow}

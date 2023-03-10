@@ -35,7 +35,7 @@ export default function PokeCard(props) {
           // src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`}
           src={pokemonGifUrl(name, id) || pokemonSpriteUrl(name, id)}
           alt={name}
-          style={{ top: `-${topOffset}px` }}
+          style={{ top: `-${topOffset}px`, imageRendering: 'pixelated' }}
         />
         {/* Display the number */}
         <p className="PokeCard-number">N&deg;{id}</p>
