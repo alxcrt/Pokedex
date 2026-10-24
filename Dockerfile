@@ -1,4 +1,4 @@
-FROM node:24.22.1-bookworm-slim AS build
+FROM node:26.12.0-bookworm-slim AS build
 WORKDIR /app
 ENV ASTRO_TELEMETRY_DISABLED=1 NEXT_TELEMETRY_DISABLED=1 NODE_OPTIONS=--max-old-space-size=2048
 COPY package*.json ./
