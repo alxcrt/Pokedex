@@ -16,3 +16,6 @@ Source provenance was checked against the live Netlify source map: all nine
 application source modules exactly match repository revision 901fd6a9. SVG map
 entries are generated webpack modules, rather than original SVG source text.
 The old yarn/CRA toolchain is retired with its scripts; Git history retains it.
+
+
+Production now runs on the verified Coolify app at https://pokedex.alexcretu.com. Netlify automatic builds are skipped; a hook-triggered build also stops before publishing. The old static deployment is retained temporarily for rollback. To roll back hosting, first review the saved DNS export and explicitly revert the build shutdown; Coolify and Cloudflare are the deployment targets.

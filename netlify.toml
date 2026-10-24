@@ -1,6 +1,7 @@
-# Transitional fallback while the verified Coolify replacement is cut over.
+# Historical rollback copy only. Production is now the verified Coolify app.
 [build]
-command = "npm run build"
+ignore = "exit 0"
+command = "echo 'Deployment moved to Coolify; Netlify publishing is disabled'; exit 1"
 publish = "dist"
 
 [build.environment]
