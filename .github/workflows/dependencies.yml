@@ -1,0 +1,64 @@
+{
+  "name": "Dependency checks",
+  "on": {
+    "push": {},
+    "pull_request": {},
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "concurrency": {
+    "group": "dependency-${{ github.workflow }}-${{ github.ref }}",
+    "cancel-in-progress": true
+  },
+  "jobs": {
+    "dependency-gate": {
+      "name": "Dependency gate",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 30,
+      "env": {
+        "NEXT_TELEMETRY_DISABLED": "1",
+        "ASTRO_TELEMETRY_DISABLED": "1"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+        },
+        {
+          "uses": "actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+          "with": {
+            "node-version": "24"
+          }
+        },
+        {
+          "run": "npm ci --ignore-scripts && npm audit --audit-level=moderate && npm run build"
+        },
+        {
+          "name": "Build and exercise the production image",
+          "run": "docker build --pull -t dependency-check .\ndocker run -d --name dependency-check --read-only --cap-drop ALL --security-opt no-new-privileges --memory 256m --cpus 1 -p 127.0.0.1:18080:8080 dependency-check\ntrap 'docker logs dependency-check; docker rm -f dependency-check' EXIT\ncurl --fail --silent --show-error --retry 20 --retry-all-errors --retry-delay 1 --max-time 10 http://127.0.0.1:18080/_health\ncurl --fail --silent --show-error --max-time 10 http://127.0.0.1:18080/ --output /tmp/home.html\ncurl --fail --silent --show-error --max-time 10 http://127.0.0.1:18080/pokemon/25 --output /tmp/pokemon.html"
+        }
+      ]
+    },
+    "verified-release-receipt": {
+      "name": "Verified release receipt",
+      "needs": "dependency-gate",
+      "if": "(github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == github.event.repository.default_branch",
+      "runs-on": "ubuntu-latest",
+      "permissions": {
+        "contents": "write"
+      },
+      "env": {
+        "GH_TOKEN": "${{ github.token }}",
+        "GH_REPO": "${{ github.repository }}",
+        "COMMIT": "${{ github.sha }}"
+      },
+      "steps": [
+        {
+          "name": "Record the exact successful default-branch commit",
+          "run": "set -eu\ncase \"$COMMIT\" in *[!a-f0-9]*|'') exit 1;; esac\n[ \"${#COMMIT}\" -eq 40 ]\nref=\"homelab-verified-$COMMIT\"\nexisting=$(gh api \"repos/$GH_REPO/git/matching-refs/tags/$ref\" --jq \".[] | select(.ref == \\\"refs/tags/$ref\\\") | .object.sha\")\nif [ \"$existing\" = \"$COMMIT\" ]; then exit 0; fi\n[ -z \"$existing\" ]\ngh api --method POST \"repos/$GH_REPO/git/refs\" -f \"ref=refs/tags/$ref\" -f \"sha=$COMMIT\"\n"
+        }
+      ]
+    }
+  }
+}

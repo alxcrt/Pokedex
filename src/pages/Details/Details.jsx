@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import PokeDetails from '../../components/PokeDetails';
 import PokeLoading from '../../components/PokeLoading';
 
-const axios = require('axios');
+import axios from 'axios';
 
 export default function Details() {
   const { id } = useParams();

@@ -1,0 +1,45 @@
+{
+  "name": "Verify default release",
+  "on": {
+    "workflow_run": {
+      "workflows": [
+        "Dependency checks"
+      ],
+      "types": [
+        "completed"
+      ]
+    },
+    "schedule": [
+      {
+        "cron": "17 * * * *"
+      }
+    ],
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read",
+    "actions": "write"
+  },
+  "concurrency": {
+    "group": "default-release-verifier",
+    "cancel-in-progress": false
+  },
+  "jobs": {
+    "verify": {
+      "if": "github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 5,
+      "env": {
+        "GH_TOKEN": "${{ github.token }}",
+        "GH_REPO": "${{ github.repository }}",
+        "DEFAULT_BRANCH": "${{ github.event.repository.default_branch }}"
+      },
+      "steps": [
+        {
+          "name": "Dispatch missing default-branch verification without checking out code",
+          "run": "python3 - <<'PY'\n#!/usr/bin/env python3\n\"\"\"Dispatch missing default-branch CI after token-authored merges.\n\nEmbedded verbatim in an API-only workflow: never check out PR code here.\nAn existing failed attempt is deliberately left for review, not retried hourly.\n\"\"\"\nimport json\nimport os\nimport re\nimport subprocess\nfrom urllib.parse import quote\n\n\ndef decision(head, branch, refs, runs):\n    if not re.fullmatch(r'[a-f0-9]{40}', head):\n        raise ValueError('Invalid default-branch commit')\n    ref = 'refs/tags/homelab-verified-' + head\n    matches = [item for item in refs if item['ref'] == ref]\n    if matches:\n        if len(matches) != 1 or matches[0]['object']['sha'] != head:\n            raise ValueError('Mismatched immutable release receipt')\n        return 'already_verified'\n    attempts = [run for run in runs if run['head_sha'] == head\n                and run['head_branch'] == branch\n                and run['event'] in ('push', 'workflow_dispatch')]\n    if attempts:\n        return 'verification_already_attempted'\n    return 'dispatch'\n\n\ndef api(path, *arguments):\n    output = subprocess.check_output(['gh', 'api', path, *arguments], text=True)\n    return json.loads(output) if output.strip() else None\n\n\ndef main():\n    repo = os.environ['GH_REPO']\n    branch = os.environ['DEFAULT_BRANCH']\n    if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', repo):\n        raise ValueError('Invalid repository')\n    head = api(f'repos/{repo}/commits/{quote(branch, safe=\"\")}')['sha']\n    refs = api(f'repos/{repo}/git/matching-refs/tags/homelab-verified-{head}')\n    pages = api(f'repos/{repo}/actions/workflows/dependencies.yml/runs?head_sha={head}&per_page=100',\n                '--paginate', '--slurp')\n    runs = [run for page in pages for run in page['workflow_runs']]\n    action = decision(head, branch, refs, runs)\n    if action == 'dispatch':\n        # Dispatch resolves the current branch again. A concurrent forward push\n        # therefore verifies that newer commit, never an untested PR merge tree.\n        api(f'repos/{repo}/actions/workflows/dependencies.yml/dispatches',\n            '--method', 'POST', '-f', f'ref={branch}')\n    print(json.dumps({'head': head, 'action': action}))\n\n\nif __name__ == '__main__':\n    main()\n\nPY\n"
+        }
+      ]
+    }
+  }
+}

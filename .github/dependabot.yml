@@ -1,0 +1,62 @@
+{
+  "version": 2,
+  "updates": [
+    {
+      "package-ecosystem": "npm",
+      "directory": "/",
+      "schedule": {
+        "interval": "daily",
+        "time": "04:00",
+        "timezone": "Europe/Bucharest"
+      },
+      "cooldown": {
+        "default-days": 3,
+        "semver-major-days": 7
+      },
+      "open-pull-requests-limit": 5,
+      "groups": {
+        "routine": {
+          "patterns": [
+            "*"
+          ],
+          "update-types": [
+            "minor",
+            "patch"
+          ]
+        }
+      }
+    },
+    {
+      "package-ecosystem": "docker",
+      "directory": "/",
+      "schedule": {
+        "interval": "daily",
+        "time": "04:00",
+        "timezone": "Europe/Bucharest"
+      },
+      "cooldown": {
+        "default-days": 3,
+        "semver-major-days": 7
+      },
+      "open-pull-requests-limit": 5,
+      "groups": {
+        "routine": {
+          "patterns": [
+            "*"
+          ],
+          "update-types": [
+            "minor",
+            "patch"
+          ]
+        }
+      }
+    },
+    {
+      "package-ecosystem": "github-actions",
+      "directory": "/",
+      "schedule": {
+        "interval": "weekly"
+      }
+    }
+  ]
+}

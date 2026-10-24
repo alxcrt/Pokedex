@@ -9,7 +9,7 @@ import Close from '../../assets/close.png';
 import { useNavigate } from 'react-router-dom';
 import Pokedex from '../../assets/Pokedex.png';
 
-const axios = require('axios');
+import axios from 'axios';
 
 const pokemonsOnPage = 24;
 const MAX_POKEMON_ID = 898;

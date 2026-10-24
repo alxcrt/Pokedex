@@ -1,0 +1,18 @@
+{
+  admin off
+  auto_https off
+  persist_config off
+}
+:8080 {
+  root * /srv
+  encode zstd gzip
+  header X-Content-Type-Options nosniff
+  header Cache-Control "public, max-age=0, must-revalidate"
+  handle /_health {
+    respond "ok" 200
+  }
+  handle {
+    try_files {path} /index.html
+    file_server
+  }
+}
