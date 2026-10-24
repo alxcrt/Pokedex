@@ -1,0 +1,12 @@
+# Transitional fallback while the verified Coolify replacement is cut over.
+[build]
+command = "npm run build"
+publish = "dist"
+
+[build.environment]
+NODE_VERSION = "24"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

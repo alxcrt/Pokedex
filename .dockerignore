@@ -1,0 +1,9 @@
+.git
+node_modules
+dist
+out
+.next
+.astro
+.env*
+*.log
+public/vendor

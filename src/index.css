@@ -1,6 +1,5 @@
-@import url("/src/shared/reset.css");
-@import url("/src/shared/colors.css");
-@import url("https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700&family=Roboto&family=Space+Mono:wght@400;700&display=swap");
+@import "./shared/reset.css";
+@import "./shared/colors.css";
 
 body {
   margin: 0;
