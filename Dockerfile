@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm ci --ignore-scripts --no-fund && npm audit --audit-level=moderate
 COPY . .
 RUN npm run build
-FROM caddy:2.11.6-alpine AS webserver
+FROM caddy:2.11.7-alpine AS webserver
 FROM alpine:3
 RUN apk add --no-cache ca-certificates libcap
 COPY --from=webserver /usr/bin/caddy /usr/bin/caddy
